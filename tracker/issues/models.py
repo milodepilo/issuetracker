@@ -6,8 +6,14 @@ from django.urls import reverse
 class Comment(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    comment_body = models.TextField("Text")
-    created_by = models.OneToOneField(User, on_delete=models.DO_NOTHING)
+    comment_body = models.TextField("Text", unique=False)
+    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, unique=False)
+    related_issue = models.ForeignKey('issue', on_delete=models.CASCADE, default="")
+    added_files = models.FileField("files", null=True, blank=True)
+
+
+    def __str__(self):
+        return f"issue{self.id}"
 
 
 # Create your models here.
@@ -42,10 +48,10 @@ class Issue(models.Model):
     status = models.TextField(choices=STATUS_CHOICES, default=STATUS_NEW)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-
+    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name="creator", default="")
+    assigned_to = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name="Assignee", default="", null=True)
     # updated_by = models.CharField(max_length=70)
-    # assigned_to = models.CharField(max_length=70)
+
     # added_files = models.FileField(
     #     "files",
     #     null=True,
