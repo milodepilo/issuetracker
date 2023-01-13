@@ -1,5 +1,5 @@
 from django.db import models
-from tracker.authentication import models as authentication
+from tracker.authentication import models as authenticationmodel
 from django.urls import reverse
 
 
@@ -7,7 +7,7 @@ class Comment(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     comment_body = models.TextField("Text")
-    created_by = models.OneToOneField(authentication.User, on_delete="DO_NOTHING")
+    created_by = models.OneToOneField(authenticationmodel.User, on_delete="DO_NOTHING")
 
 
 # Create your models here.
@@ -42,7 +42,8 @@ class Issue(models.Model):
     status = models.TextField(choices=STATUS_CHOICES, default=STATUS_NEW)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(authentication.User, on_delete="DO_NOTHING")
+    created_by = models.ForeignKey(authenticationmodel.User, on_delete="DO_NOTHING")
+
     # updated_by = models.CharField(max_length=70)
     # assigned_to = models.CharField(max_length=70)
     # added_files = models.FileField(
@@ -55,5 +56,6 @@ class Issue(models.Model):
 
     def get_absolute_url(self):
         return reverse('issue-detail-view', args=[str(self.id)])
+
     def __str__(self):
         return self.brief_description
