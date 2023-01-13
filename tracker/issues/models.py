@@ -1,5 +1,6 @@
 from django.db import models
 from tracker.authentication import models as authentication
+from django.urls import reverse
 
 
 class Comment(models.Model):
@@ -39,15 +40,20 @@ class Issue(models.Model):
         max_length=2, choices=PRIORITY_CHOICES, default=PRIORITY_LOW
     )
     status = models.TextField(choices=STATUS_CHOICES, default=STATUS_NEW)
-    # added_files = models.FileField(
-    #     "files",
-    #     null=True,
-    # )
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(authentication.User, on_delete="DO_NOTHING")
     # updated_by = models.CharField(max_length=70)
     # assigned_to = models.CharField(max_length=70)
+    # added_files = models.FileField(
+    #     "files",
+    #     null=True,
+    # )
 
+    class Meta:
+        ordering = ['-date_created']
+
+    def get_absolute_url(self):
+        return reverse('issue-detail-view', args=[str(self.id)])
     def __str__(self):
         return self.brief_description
