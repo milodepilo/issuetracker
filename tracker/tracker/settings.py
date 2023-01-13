@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "authenticationmodel.apps.AuthenticationConfig",
+    "authentication_model.apps.AuthenticationConfig",
     "issues.apps.IssuesConfig",
 ]
 
