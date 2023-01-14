@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block title %}<title>Comment {{ comment.id }}</title>{% endblock%}
+
+
+{% block content %}
+
+<h1>Comment on issue: <a href=" {{ comment.related_issue.get_absolute_url }}">Issue {{ comment.related_issue.id }} </a></h1>
+<p>{{comment.comment_body}}</p>
+
+{% endblock %}

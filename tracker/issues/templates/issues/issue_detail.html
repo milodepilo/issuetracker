@@ -1,0 +1,30 @@
+{% extends "base_generic.html" %}
+
+{% block title %}<title>issue {{ issue.id }}</title>{% endblock%}
+
+{% block content %}
+<h1>Issue: {{ issue.id }}</h1>
+
+<p><strong>Issue Summary:</strong> {{ issue.brief_description }}</p>
+<p><strong>Description:</strong> {{ issue.description }}</p>
+<p><strong>Status:</strong> {{ issue.status }}</p>
+<hr>
+<p class="{% if issue.priority == 'P3' %}text-success{% elif issue.priority == 'P1' %}text-danger{% else %}text-warning{% endif %}">
+<strong>Prio: {{ issue.priority }}</strong><p>
+
+<div style="margin-left:20px;margin-top:20px">
+    {% if issue.comment_set.all %}
+    <h4>Comments</h4>
+
+    {% for com in issue.comment_set.all  %}
+    <hr>
+    <p><a href="{{ com.get_absolute_url }}">{{com.date_created}} - {{com.created_by}}</a>
+             </p>
+    <ol>
+    <li>{{ com.comment_body}}</li>
+    </ol>
+    {% endfor %}
+    {% endif %}
+</div>
+
+{% endblock %}

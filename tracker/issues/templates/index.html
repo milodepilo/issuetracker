@@ -1,5 +1,9 @@
 {% extends "base_generic.html" %}
 
+{% block title %}<title>Issues Title</title>{% endblock%}
+
+
+
 {% block content %}
   <h1>Local Library Home</h1>
   <p>Welcome to LocalLibrary, a website developed by <em>Mozilla Developer Network</em>!</p>
@@ -7,7 +11,6 @@
   <p>The library has the following record counts:</p>
   <ul>
     <li><strong>issues:</strong> {{ num_issues }}</li>
-
-
+    <li><strong>open issues:</strong> {{ open_issues }}</li>
   </ul>
 {% endblock %}

@@ -10,8 +10,8 @@ class CommentsInline(admin.StackedInline):
 
 @admin.register(Issue)
 class IssueAdmin(admin.ModelAdmin):
-    list_display = ("id", "priority", "brief_description", "date_created", "created_by")
-    list_filter = ("priority",)
+    list_display = ("id", "status", "priority", "brief_description", "date_created", "created_by")
+    list_filter = ("priority", "status",)
     inlines = [CommentsInline]
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):

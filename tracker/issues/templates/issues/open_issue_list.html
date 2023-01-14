@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+{% block title %}<title>Open Issues</title>{% endblock%}
+
+{% block content %}
+{% if open_issue_list%}
+<h1>Open Issues</h1>
+{% for issue in open_issue_list %}
+<li><a href="{{issue.get_absolute_url }}">{{issue.brief_description}}</a> ({{ issue.created_by}}, {{issue.date_created}})
+</li>
+{% endfor %}
+{% else %}
+<h1>No issues at the moment</h1>
+{% endif %}
+{% endblock %}
