@@ -2,7 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from .models import Issue, Comment
 from django.views import generic
 from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import AddCommentForm
+from django.urls import reverse
 # Create your views here.
 
 
@@ -25,8 +28,31 @@ class IssueListView(generic.ListView):
     paginate_by = 10
 
 
-class IssueDetailView(generic.DetailView):
+class IssueDetailView(FormMixin, generic.DetailView):
     model = Issue
+    form_class = AddCommentForm
+
+    def get_success_url(self):
+        return reverse("issue-detail-view", kwargs={"pk": self.object.pk})
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            comment_instance = form.save(commit=False)
+            comment_instance.created_by = request.user
+            comment_instance.related_issue = self.object
+            comment_instance.save()
+            self.object.comment_set.add(comment_instance)
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["add_comment_form"] = AddCommentForm()
+        return context
 
 
 class CommentDetailView(generic.DetailView):
@@ -68,5 +94,6 @@ class IssueUpdateView(UpdateView):
 
 class IssueDeleteView(DeleteView):
   model = Issue
+
 
 
