@@ -44,10 +44,14 @@ class OpenIssueListView(generic.ListView):
 
 class IssueCreateView(CreateView):
   model = Issue
+  fields = ["brief_description", "description", "priority", "assigned_to"]
 
 
 class IssueUpdateView(UpdateView):
   model = Issue
+  fields = [
+    "brief_description", "description", "priority", "status", "assigned_to"
+  ]
 
 
 class IssueDeleteView(DeleteView):
