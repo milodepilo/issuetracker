@@ -47,8 +47,12 @@ class Issue(models.Model):
 
     def __str__(self):
         return str(self.id)
+
     def get_absolute_url(self):
-        return reverse('issue-detail-view', args=[str(self.id)])
+        return reverse('issue-detail-view', kwargs={'pk': self.pk})
+
+    def get_update_url(self):
+        return reverse('issue-update-view', kwargs={'pk': self.pk})
 
 
 

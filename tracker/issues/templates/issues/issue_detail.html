@@ -4,6 +4,7 @@
 
 {% block content %}
 <h1>Issue: {{ issue.id }}</h1>
+<a href="{{object.get_update_url}}">Update</a>
 
 <p><strong>Issue Summary:</strong> {{ issue.brief_description }}</p>
 <p><strong>Description:</strong> {{ issue.description }}</p>

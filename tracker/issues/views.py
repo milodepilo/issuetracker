@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Issue, Comment
 from django.views import generic
-
-
+from django.views.generic import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 
@@ -48,4 +48,25 @@ class PersonalizedIssueListView(generic.ListView):
 
     def get(self, request, *args, **kwargs):
         ...
+
+
+class IssueCreateView(LoginRequiredMixin, CreateView):
+  model = Issue
+  fields = ["brief_description", "description", "priority", "assigned_to"]
+
+  def form_valid(self, form):
+      form.instance.created_by = self.request.user
+      return super().form_valid(form)
+
+
+class IssueUpdateView(UpdateView):
+  model = Issue
+  fields = [
+    "brief_description", "description", "priority", "status", "assigned_to",
+  ]
+
+
+class IssueDeleteView(DeleteView):
+  model = Issue
+
 
