@@ -19,12 +19,14 @@ class Issue(models.Model):
     STATUS_WAITING = "Waiting"
     STATUS_CANCELED = "Canceled"
     STATUS_RESOLVED = "Resolved"
+    STATUS_IN_DEVELOPMENT = "In Development"
     STATUS_CHOICES = [
         (STATUS_NEW, "New"),
         (STATUS_ON_HOLD, "On Hold"),
         (STATUS_WAITING, "Waiting"),
         (STATUS_CANCELED, "Canceled"),
         (STATUS_RESOLVED, "Resolved"),
+        (STATUS_IN_DEVELOPMENT, "In Development"),
     ]
 
     brief_description = models.TextField("Summary")

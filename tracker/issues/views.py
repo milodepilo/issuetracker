@@ -39,3 +39,13 @@ class OpenIssueListView(generic.ListView):
     template_name = "issues/open_issue_list.html"
     queryset = Issue.objects.filter(status__in=["New", "On Hold", "Waiting"])
     paginate_by = 10
+
+
+class PersonalizedIssueListView(generic.ListView):
+    model = Issue
+    context_object_name = "personalized_issue_list"
+    template_name = "issues/personalized-issue-list.html"
+
+    def get(self, request, *args, **kwargs):
+        ...
+
