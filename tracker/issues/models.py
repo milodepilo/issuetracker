@@ -19,12 +19,14 @@ class Issue(models.Model):
     STATUS_WAITING = "Waiting"
     STATUS_CANCELED = "Canceled"
     STATUS_RESOLVED = "Resolved"
+    STATUS_IN_DEVELOPMENT = "In Development"
     STATUS_CHOICES = [
         (STATUS_NEW, "New"),
         (STATUS_ON_HOLD, "On Hold"),
         (STATUS_WAITING, "Waiting"),
         (STATUS_CANCELED, "Canceled"),
         (STATUS_RESOLVED, "Resolved"),
+        (STATUS_IN_DEVELOPMENT, "In Development"),
     ]
 
     brief_description = models.TextField("Summary")
@@ -45,11 +47,12 @@ class Issue(models.Model):
 
     def __str__(self):
         return str(self.id)
+
     def get_absolute_url(self):
-        return reverse('issue-detail-view', args=[str(self.id)])
+        return reverse('issue-detail-view', kwargs={'pk': self.pk})
 
-
-
+    def get_update_url(self):
+        return reverse('issue-update-view', kwargs={'pk': self.pk})
 
 
 class Comment(models.Model):

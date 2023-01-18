@@ -3,7 +3,8 @@
 {% block title %}<title>issue {{ issue.id }}</title>{% endblock%}
 
 {% block content %}
-<h1>Issue: {{ issue.id }}</h1>
+<h1>Issue: {{ context.id }}</h1>
+<a href="{{object.get_update_url}}">Update</a>
 
 <p><strong>Issue Summary:</strong> {{ issue.brief_description }}</p>
 <p><strong>Description:</strong> {{ issue.description }}</p>
@@ -15,6 +16,15 @@
 <div style="margin-left:20px;margin-top:20px">
     {% if issue.comment_set.all %}
     <h4>Comments</h4>
+
+    <div>
+        <h1>{{ object.title }}</h1>
+        <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+        </form>
+    </div>
 
     {% for com in issue.comment_set.all  %}
     <hr>
